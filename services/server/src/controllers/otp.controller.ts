@@ -19,7 +19,6 @@ export const sendOtp = async (req: Request, res: Response) => {
         please contact our customer support immediately.`
         twilio(message, sendTo)
         .then( async (message) => {
-            console.log(message);
             return res.json({ success: true, message: "OTP sent successfully"})
         })
         .catch((err) => {
@@ -29,7 +28,6 @@ export const sendOtp = async (req: Request, res: Response) => {
         if (error.code === 11000) {
             return res.json({ success: false, message: "Use the otp already sent! or try to resend otp after some moments"})
         }
-        console.log(`hey safee.. something went wrong ${error}`);
         return res.json({ success: false, message: error})
     }
 }
@@ -51,14 +49,12 @@ export const resendOtp = async (req: Request, res: Response) => {
         please contact our customer support immediately.`
         twilio( message, sendTo)
         .then( async (message) => {
-            console.log(message);
             return res.json({ success: true, message: "OTP sent successfully"})
         })
         .catch((err) => {
             return res.json({ success: false, message: err})
         })
     } catch (error) {
-        console.log(`hey safee.. something went wrong ${error}`);
         return res.json()
     }
 }
@@ -76,7 +72,6 @@ export const verifyOtp = async (req: Request, res: Response) => {
         }
         // else we will continue in the next block;
     } catch (error) {
-        console.log(`hey safee.. something went wrong during checking the existence of otp doc ${error}`);
         return res.json({ success: false, message: error})
     }
 
@@ -93,7 +88,6 @@ export const verifyOtp = async (req: Request, res: Response) => {
             return res.json({ success: false, message: "please enter valid otp"})
         }
     } catch (error) {
-        console.log(`hey safee.. an error happened during verifying the otp ${error}`);
         return res.json({ success: false, message: error})
     }
 }

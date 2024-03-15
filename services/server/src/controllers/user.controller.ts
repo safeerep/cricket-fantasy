@@ -35,7 +35,6 @@ export const regiser = async (req: Request, res: Response) => {
         }
         // else we will continue in the next block;
     } catch (error) {
-        console.log(`hey safee.. something went wrong during creating account for a new user ${error}`);
         return res.status(503).json({ success: false, message: error })
     }
 
@@ -56,7 +55,6 @@ export const regiser = async (req: Request, res: Response) => {
             // else we can save user credentials in next block;
         }
     } catch (error) {
-        console.log(`hey safee.. something went wrong during otp verification ${error}`);
         return res.status(503).json({ success: false, message: error })
     }
 
@@ -71,8 +69,6 @@ export const regiser = async (req: Request, res: Response) => {
         res.cookie("jwtToken", token, { maxAge: 30 * 24 * 60 * 60 * 1000 })
         return res.status(201).json({ success: true, userData: newUser, token, message: "successfully created new user" })
     } catch (error: any) {
-        console.log(`in last catch ${error}`);
-
         if (error.code === 11000) {
             return res.status(409).json({ success: false, message: "You are already registered, try to login" })
         }
@@ -117,7 +113,6 @@ export const login = async (req: Request, res: Response) => {
             }
         }
     } catch (error) {
-        console.log(`hey safee.. something went wrong during checking validity of phone number and password: ${error}`);
         return res.json({ success: false, message: error })
     }
 }
@@ -132,10 +127,8 @@ export const getUserProfile = async (req: Request, res: Response) => {
         const userData: IUSER | null = await userCollection.findById(userId)
         return res.status(200).json({ success: true, userData, message: "user profile fetched successfully"})
     } catch (error) {
-        console.log(`hey safee.. something went wrong during fetching user data ${error}`);
         return res.status(500).json({ success: false, message: error })
     }
-
 }
 
 export const logout = async ( req: Request, res: Response) => {
@@ -143,7 +136,6 @@ export const logout = async ( req: Request, res: Response) => {
         res.clearCookie("jwtToken")
         return res.json({ success: true, message: "successfully logged out"})
     } catch (error) {
-        console.log(`hey safee.. something went wrong during making user logged out ${error}`);
         return res.json({ success: false, message: error})
     }
 }

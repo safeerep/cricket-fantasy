@@ -20,7 +20,6 @@ export const getUserWallet = async (req: Request, res: Response) => {
             return res.json({ success: true, userWallet, message: "successfully fetched user wallet"})
         }
     } catch (error) {
-        console.log(`hey safee.. something went wrong during retrieiving user wallet ${error}`);
         return res.status(500).json({ success: false, message: error })
     }
 }
@@ -74,7 +73,6 @@ export const addMoneyToWallet = async ( req: Request, res: Response) => {
             return res.json({ success: true, userWallet: updatedUserWallet, message: "successfully updated user wallet"})
         }
     } catch (error) {
-        console.log(`hey safee.. something went wrong during adding money to wallet ${error}`);
         return res.json({ success: false, message: error })
     }
 }
@@ -125,9 +123,7 @@ export const withdrawMoneyFromWallet = async ( req: Request, res: Response) => {
                 return res.json({ success: true, userWallet: updatedUserWallet, message: `successfully withdrawn the amout ${amount} and remaining balance is ${updatedUserWallet?.walletBalance}`})
             }
         }
-
     } catch (error) {
-        console.log(`hey safee.. something went wrong during withdrawing money from wallet ${error}`);
         return res.status(500).json({ success: false, message: error})
     }
 }
@@ -147,7 +143,6 @@ export const getWalletTransactionHistory = async ( req: Request, res: Response) 
         }
         return res.json({ success: true, message: "you haven't done a single transaction"})
     } catch (error) {
-        console.log(`hey safee.. something went wrong during fetching wallet history ${error}`);
         return res.json({ success: false, message: error })
     }
 }
