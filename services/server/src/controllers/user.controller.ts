@@ -137,3 +137,13 @@ export const getUserProfile = async (req: Request, res: Response) => {
     }
 
 }
+
+export const logout = async ( req: Request, res: Response) => {
+    try {
+        res.clearCookie("jwtToken")
+        return res.json({ success: true, message: "successfully logged out"})
+    } catch (error) {
+        console.log(`hey safee.. something went wrong during making user logged out ${error}`);
+        return res.json({ success: false, message: error})
+    }
+}

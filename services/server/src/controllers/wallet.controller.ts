@@ -66,6 +66,8 @@ export const addMoneyToWallet = async ( req: Request, res: Response) => {
                             transactionType: "deposit"
                         }
                     }
+                }, {
+                    new: true
                 }
             )
 
@@ -131,5 +133,21 @@ export const withdrawMoneyFromWallet = async ( req: Request, res: Response) => {
 }
 
 export const getWalletTransactionHistory = async ( req: Request, res: Response) => {
-    
+    try {
+        const token: string = req.cookies.jwtToken;
+        const userId: string | boolean | unknown = await destructureToken(token)
+        // first we will find user wallet
+        const wallet: IWALLET | null  = await walletCollection.findOne({
+            userId: userId
+        }, {
+            walletHistory: 1,
+        }) 
+        if (wallet) {
+            return res.json({ success: true, walletHistory: wallet.walletHistory, message: "successfully fetch wallet history"})
+        }
+        return res.json({ success: true, message: "you haven't done a single transaction"})
+    } catch (error) {
+        console.log(`hey safee.. something went wrong during fetching wallet history ${error}`);
+        return res.json({ success: false, message: error })
+    }
 }

@@ -7,11 +7,13 @@ import {
 import {
     login,
     regiser,
-    getUserProfile
+    getUserProfile,
+    logout
 } from "../controllers/user.controller"
 import { 
     addMoneyToWallet,
     getUserWallet, 
+    getWalletTransactionHistory, 
     withdrawMoneyFromWallet
 } from "../controllers/wallet.controller"
 import checkAuth from "../middlewares/check.auth"
@@ -26,6 +28,8 @@ router.post('/verify-otp', verifyOtp)
 
 // to verify password and let user to login
 router.post('/login', login)
+// let user to log out from application
+router.get('/logout', logout)
 // to create account for a new user;
 router.post('/register', regiser)
 // here onwards, for to get following routes, user required to be logged in;
@@ -36,7 +40,7 @@ router.get('/get-profile', getUserProfile )
 // to retrieve wallet details
 router.get('/wallet', getUserWallet)
 // to fetch the transaction history of the user
-router.get('/wallet-history')
+router.get('/wallet-history', getWalletTransactionHistory)
 // to add cash into wallet
 router.patch('/add-money', addMoneyToWallet)
 // to withdraw money from wallet
