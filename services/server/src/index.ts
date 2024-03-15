@@ -1,10 +1,13 @@
 import { config } from "dotenv"
 config()
-
+import connectDb from "./config/db.config";
+connectDb()
 import express, { Express, Request, Response } from "express";
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import session from "express-session"
+import userRouter from "./routes/user.routes";
+import matchRouter from "./routes/match.routes";
 
 const app: Express = express()
 
@@ -28,7 +31,8 @@ app.get('/health', (req: Request, res: Response) => {
     res.send({ "message": "server' is running fine"})
 })
 
-app.use('/api/v1/user')
+app.use('/api/v1/user', userRouter)
+app.use('/api/v1/match', matchRouter)
 
 const PORT = process.env.PORT || 3333;
 app.listen( PORT, () => {
