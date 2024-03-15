@@ -9,6 +9,12 @@ import {
     regiser,
     getUserProfile
 } from "../controllers/user.controller"
+import { 
+    addMoneyToWallet,
+    getUserWallet, 
+    withdrawMoneyFromWallet
+} from "../controllers/wallet.controller"
+import checkAuth from "../middlewares/check.auth"
 
 const router = Router()
 // to reques for send otp
@@ -22,16 +28,18 @@ router.post('/verify-otp', verifyOtp)
 router.post('/login', login)
 // to create account for a new user;
 router.post('/register', regiser)
+// here onwards, for to get following routes, user required to be logged in;
+router.use(checkAuth)
 // to retrieve user profile details;
 router.get('/get-profile', getUserProfile )
 
 // to retrieve wallet details
-router.get('/wallet')
+router.get('/wallet', getUserWallet)
 // to fetch the transaction history of the user
 router.get('/wallet-history')
 // to add cash into wallet
-router.patch('/add-to-wallet')
+router.patch('/add-money', addMoneyToWallet)
 // to withdraw money from wallet
-router.patch('/withdraw-money')
+router.patch('/withdraw-money', withdrawMoneyFromWallet)
 
 export default router;
